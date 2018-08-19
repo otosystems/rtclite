@@ -77,12 +77,7 @@ class RTP(object):
                 pt, seq, ts, ssrc, csrcs, marker, extn, payload
         else:  # parse the packet.
             if len(value) < 12: raise ValueError('RTP packet must be at least 12 bytes')
-            print(value[0])
-            # raise Exception
             if value[0] & 0xC0 != 0x80:
-                print(value)
-                print('sad', value[0])
-                print('sad', value[1])
                 raise ValueError('RTP version must be 2')
             px, mpt, self.seq, self.ts, self.ssrc = struct.unpack('!BBHII', value[:12])
             self.marker, self.pt = (mpt & 0x80 and True or False), (mpt & 0x7f)
